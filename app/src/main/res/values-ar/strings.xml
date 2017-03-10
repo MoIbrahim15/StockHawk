@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="dialog_title">إضافة سهم</string>
+    <string name="dialog_hint">الرمز (e.g. GOOG)</string>
+    <string name="dialog_cancel">إلغاء</string>
+    <string name="dialog_add">إضافة</string>
+    <string name="error_no_network">لا يوجد اتصال بالانترنت! سيتم تحميل مؤشر الأسهم عندما تتوفر الشبكة.</string>
+    <string name="error_no_stocks">لا يوجد اسهم! اضغط على الزر للأضافة.</string>
+    <string name="toast_stock_added_no_connectivity">سيتم تحديث البيانات عند الاتصال بالانترنت ,%s تمت اضافة</string>
+    <string name="toast_no_connectivity">سيتم تحديث عند الاتصال بالانترنت.</string>
+    <string name="add_stock_symbol">إضافة رمز السهم</string>
+</resources>
