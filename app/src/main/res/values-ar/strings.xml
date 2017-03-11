@@ -10,4 +10,7 @@
     <string name="toast_stock_added_no_connectivity">سيتم تحديث البيانات عند الاتصال بالانترنت ,%s تمت اضافة</string>
     <string name="toast_no_connectivity">سيتم تحديث عند الاتصال بالانترنت.</string>
     <string name="add_stock_symbol">إضافة رمز السهم</string>
+    <string name="stock_history">تفاصيل السهم</string>
+    <string name="history_desc">اسعار السهم علي مدار السنين</string>
+
 </resources>
