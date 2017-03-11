@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,12 +39,12 @@
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity
-            android:name=".ui.DetailActivity"
+            android:name=".ui.HistoryActivity"
             android:label="@string/stock_history"
-            android:parentActivityName=".ui.MainActivity">
+            android:parentActivityName=".ui.HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.udacity.stockhawk.ui.MainActivity" />
+                android:value="com.udacity.stockhawk.ui.HomeActivity" />
         </activity>
     </application>
 

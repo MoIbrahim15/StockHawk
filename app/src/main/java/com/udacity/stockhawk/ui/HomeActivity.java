@@ -28,7 +28,7 @@ import com.udacity.stockhawk.sync.QuoteSyncJob;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
+public class HomeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
         SwipeRefreshLayout.OnRefreshListener,
         StockAdapter.StockAdapterOnClickHandler {
 
@@ -42,15 +42,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @SuppressWarnings("WeakerAccess")
     @BindView(R.id.error)
     TextView error;
+
     private StockAdapter adapter;
+
     public static final String STOCK_HISTORY = "STOCK_HISTORY";
     public static final String STOCK_SYMBOL = "STOCK_SYMBOL";
+    public static final String STOCK_PRICE = "STOCK_PRICE";
+    public static final String STOCK_ABS_CHANGE = "STOCK_ABS_CHANGE";
+    public static final String STOCK_PER_CHANGE = "STOCK_PER_CHANGE";
 
     @Override
     public void onClick(Cursor cursor) {
-        Intent intent = new Intent(this, DetailActivity.class);
+        Intent intent = new Intent(this, HistoryActivity.class);
         intent.putExtra(STOCK_HISTORY, cursor.getString(Contract.Quote.POSITION_HISTORY));
         intent.putExtra(STOCK_SYMBOL, cursor.getString(Contract.Quote.POSITION_SYMBOL));
+        intent.putExtra(STOCK_PRICE, cursor.getFloat(Contract.Quote.POSITION_PRICE));
+        intent.putExtra(STOCK_ABS_CHANGE, cursor.getFloat(Contract.Quote.POSITION_ABSOLUTE_CHANGE));
+        intent.putExtra(STOCK_PER_CHANGE, cursor.getFloat(Contract.Quote.POSITION_PERCENTAGE_CHANGE));
         startActivity(intent);
     }
 
@@ -81,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 String symbol = adapter.getSymbolAtPosition(viewHolder.getAdapterPosition());
-                PrefUtils.removeStock(MainActivity.this, symbol);
+                PrefUtils.removeStock(HomeActivity.this, symbol);
                 getContentResolver().delete(Contract.Quote.makeUriForStock(symbol), null, null);
             }
         }).attachToRecyclerView(stockRecyclerView);

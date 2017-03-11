@@ -1,13 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.udacity.stockhawk.ui.DetailActivity">
+    android:layout_height="match_parent">
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/line_chart"
+    <com.google.android.flexbox.FlexboxLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="@dimen/d16" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_height="match_parent"
+        app:alignContent="stretch"
+        app:alignItems="stretch"
+        app:flexWrap="wrap">
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/line_chart"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="@dimen/d16"
+            app:layout_flexBasisPercent="1000%" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            style="@style/BidPriceTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/d6"
+            android:gravity="center"
+            app:layout_alignSelf="center"
+            app:layout_flexBasisPercent="30%" />
+
+        <TextView
+            android:id="@+id/tv_abs_change"
+            style="@style/PercentChangeTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/d6"
+            android:drawableStart="@drawable/ic_dollar"
+            android:gravity="center"
+            app:layout_alignSelf="center"
+            app:layout_flexBasisPercent="30%" />
+
+        <TextView
+            android:id="@+id/tv_per_change"
+            style="@style/PercentChangeTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/d6"
+            android:drawableStart="@drawable/ic_percentage"
+            android:gravity="center"
+            app:layout_alignSelf="center"
+            app:layout_flexBasisPercent="30%" />
+    </com.google.android.flexbox.FlexboxLayout>
+</android.support.v4.widget.NestedScrollView>
