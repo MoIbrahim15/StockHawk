@@ -93,12 +93,14 @@ public class HistoryActivity extends AppCompatActivity {
 
         LineDataSet dataSet = new LineDataSet(entries, stockSymbol);
         dataSet.setColor(ContextCompat.getColor(this, android.R.color.white));
+        dataSet.setHighlightEnabled(false);
 
         LineData lineData = new LineData(dataSet);
-        lineData.setValueTextColor(android.R.color.white);
-
+        lineData.setValueTextColor(ContextCompat.getColor(this, android.R.color.white));
         Description description = new Description();
+        description.setTextColor(ContextCompat.getColor(this, android.R.color.white));
         description.setText(getString(R.string.history_desc));
+
         lineChart.setDescription(description);
         lineChart.getAxisRight().setEnabled(false);
         lineChart.setData(lineData);

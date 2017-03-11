@@ -29,10 +29,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/d16"
+        android:contentDescription="@string/add_stock_symbol"
         android:onClick="button"
         android:src="@drawable/fab_plus"
         app:backgroundTint="@color/material_blue_500"
-        android:contentDescription="@string/add_stock_symbol"
         app:borderWidth="0dp"
         app:elevation="@dimen/d6"
         app:fabSize="normal"
@@ -43,7 +43,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:gravity="center"
         android:textAppearance="@android:style/TextAppearance.Medium"
         android:textColor="@android:color/white"
+        android:textStyle="bold"
         android:visibility="gone" />
 </merge>
