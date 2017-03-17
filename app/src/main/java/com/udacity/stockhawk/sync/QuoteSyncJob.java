@@ -30,8 +30,9 @@ import yahoofinance.quotes.stock.StockQuote;
 
 public final class QuoteSyncJob {
 
+
     private static final int ONE_OFF_ID = 2;
-    private static final String ACTION_DATA_UPDATED = "com.udacity.stockhawk.ACTION_DATA_UPDATED";
+    public static final String ACTION_WIDGET_UPDATED = "android.appwidget.action.ACTION_WIDGET_UPDATED";
     private static final int PERIOD = 300000;
     private static final int INITIAL_BACKOFF = 10000;
     private static final int PERIODIC_ID = 1;
@@ -103,6 +104,8 @@ public final class QuoteSyncJob {
                     quoteCV.put(Contract.Quote.COLUMN_HISTORY, historyBuilder.toString());
 
                     quoteCVs.add(quoteCV);
+                } else {
+                    PrefUtils.removeStock(context, symbol);
                 }
             }
 
@@ -111,12 +114,16 @@ public final class QuoteSyncJob {
                             Contract.Quote.URI,
                             quoteCVs.toArray(new ContentValues[quoteCVs.size()]));
 
-            Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED);
-            context.sendBroadcast(dataUpdatedIntent);
+            updateWidget(context);
 
         } catch (IOException exception) {
             Timber.e(exception, "Error fetching stock quotes");
         }
+    }
+
+    private static void updateWidget(Context context) {
+        Intent intent = new Intent(ACTION_WIDGET_UPDATED);
+        context.sendBroadcast(intent);
     }
 
     private static void schedulePeriodic(Context context) {

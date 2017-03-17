@@ -37,28 +37,24 @@ public class HistoryActivity extends AppCompatActivity {
     @BindView(R.id.tv_per_change)
     TextView tvPerChange;
 
-    private String stockHistory;
-    private String stockSymbol;
-    private Float stockPrice;
-    private Float stockAbsChange;
-    private Float stockPerChange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
-
         fillViews();
     }
 
     private void fillViews() {
         Intent intent = getIntent();
-        stockHistory = intent.getStringExtra(STOCK_HISTORY);
-        stockSymbol = intent.getStringExtra(STOCK_SYMBOL);
-        stockPrice = intent.getFloatExtra(STOCK_PRICE, 0f);
-        stockAbsChange = intent.getFloatExtra(STOCK_ABS_CHANGE, 0f);
-        stockPerChange = intent.getFloatExtra(STOCK_PER_CHANGE, 0f);
+        String stockHistory = intent.getStringExtra(STOCK_HISTORY);
+        String stockSymbol = intent.getStringExtra(STOCK_SYMBOL);
+        Float stockPrice = intent.getFloatExtra(STOCK_PRICE, 0f);
+        Float stockAbsChange = intent.getFloatExtra(STOCK_ABS_CHANGE, 0f);
+        Float stockPerChange = intent.getFloatExtra(STOCK_PER_CHANGE, 0f);
+
+        setTitle(stockSymbol);
 
         if (stockAbsChange > 0) {
             tvAbsChange.setBackgroundResource(R.drawable.percent_change_pill_green);
@@ -79,11 +75,11 @@ public class HistoryActivity extends AppCompatActivity {
 //        for (String raw : history_ins) {
 //            Timber.d(raw);
 //        }
-        initChart(history_ins);
+        initChart(history_ins, stockSymbol);
     }
 
 
-    private void initChart(String[] history) {
+    private void initChart(String[] history, String label) {
         List<Entry> entries = new ArrayList<>();
         for (int i = 0; i < history.length; i++) {
             String pair[] = history[i].split(", ");
@@ -91,7 +87,7 @@ public class HistoryActivity extends AppCompatActivity {
             entries.add(new Entry(i, price));
         }
 
-        LineDataSet dataSet = new LineDataSet(entries, stockSymbol);
+        LineDataSet dataSet = new LineDataSet(entries, label);
         dataSet.setColor(ContextCompat.getColor(this, android.R.color.white));
         dataSet.setHighlightEnabled(false);
 
