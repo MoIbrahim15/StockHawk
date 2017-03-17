@@ -75,7 +75,7 @@ public RemoteViewsFactory onGetViewFactory(Intent intent) {
             Double per_change = 0.1*data.getDouble(POSITION_PERCENTAGE_CHANGE);
             String history = data.getString(POSITION_HISTORY);
             views.setTextViewText(R.id.symbol, symbol);
-            views.setTextViewText(R.id.price, "$" /*+ String.format("%.2f", price)*/);
+            views.setTextViewText(R.id.price, "$" + String.format("%.2f", price));
             if(per_change < 0 ){
                 views.setInt(R.id.change, "setBackgroundResource", R.drawable.percent_change_pill_red);
                 views.setTextViewText(R.id.change, String.format("%.2f", per_change)+"%");
