@@ -12,5 +12,6 @@
     <string name="add_stock_symbol">إضافة رمز السهم</string>
     <string name="stock_history">تفاصيل السهم</string>
     <string name="history_desc">اسعار السهم علي مدار السنين</string>
+    <string name="wrong_input">رمز غير صحيح</string>
 
 </resources>

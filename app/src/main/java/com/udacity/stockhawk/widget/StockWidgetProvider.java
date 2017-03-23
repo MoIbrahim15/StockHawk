@@ -6,10 +6,10 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
 
 import com.udacity.stockhawk.R;
-import com.udacity.stockhawk.sync.QuoteSyncJob;
 import com.udacity.stockhawk.ui.HomeActivity;
 
 /**
@@ -20,37 +20,43 @@ public class StockWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
     }
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+    private void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                 int appWidgetId) {
 
         CharSequence widgetText = context.getString(R.string.app_name);
-        // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
         views.setTextViewText(R.id.app_widget_text, widgetText);
-        views.setRemoteAdapter(R.id.stock_list, new Intent(context, StockWidgetListService.class));
+
         Intent launchIntent = new Intent(context, HomeActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, launchIntent, 0);
         views.setOnClickPendingIntent(R.id.widget, pendingIntent);
 
+        setRemoteAdapter(context, views);
         appWidgetManager.updateAppWidget(appWidgetId, views);
-
     }
-
 
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-        if (QuoteSyncJob.ACTION_WIDGET_UPDATED.equals(intent.getAction())) {
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            ComponentName thisWidget = new ComponentName(context, StockWidgetProvider.class);
-            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
-            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.stock_list);
-        }
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        ComponentName thisWidget = new ComponentName(context, StockWidgetProvider.class);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.stock_list);
     }
 
+    /**
+     * Sets the remote adapter used to fill in the list items
+     *
+     * @param views RemoteViews to set the RemoteAdapter
+     */
+    private static void setRemoteAdapter(Context context, @NonNull final RemoteViews views) {
+        views.setRemoteAdapter(R.id.stock_list,
+                new Intent(context, StockWidgetService.class));
+    }
 }

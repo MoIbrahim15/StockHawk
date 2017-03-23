@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
+import com.udacity.stockhawk.listeners.ErrorListener;
 import com.udacity.stockhawk.sync.QuoteSyncJob;
 
 import butterknife.BindView;
@@ -30,7 +31,7 @@ import butterknife.ButterKnife;
 
 public class HomeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
         SwipeRefreshLayout.OnRefreshListener,
-        StockAdapter.StockAdapterOnClickHandler {
+        StockAdapter.StockAdapterOnClickHandler, ErrorListener {
 
     private static final int STOCK_LOADER = 0;
     @SuppressWarnings("WeakerAccess")
@@ -77,7 +78,7 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
         swipeRefreshLayout.setRefreshing(true);
         onRefresh();
 
-        QuoteSyncJob.initialize(this);
+        QuoteSyncJob.initialize(this, this);
         getSupportLoaderManager().initLoader(STOCK_LOADER, null, this);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
@@ -107,7 +108,7 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onRefresh() {
 
-        QuoteSyncJob.syncImmediately(this);
+        QuoteSyncJob.syncImmediately(this, this);
 
         if (!networkUp() && adapter.getItemCount() == 0) {
             swipeRefreshLayout.setRefreshing(false);
@@ -140,7 +141,7 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
             }
 
             PrefUtils.addStock(this, symbol);
-            QuoteSyncJob.syncImmediately(this);
+            QuoteSyncJob.syncImmediately(this, this);
         }
     }
 
@@ -199,4 +200,14 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onError(final int stringRes) {
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(HomeActivity.this, stringRes, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 }

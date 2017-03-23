@@ -34,4 +34,5 @@
     <string name="add_stock_symbol">Add Stock Symbol</string>
     <string name="stock_history">Stock History</string>
     <string name="history_desc">Stock Price over years</string>
+    <string name="wrong_input">Wrong input</string>
 </resources>

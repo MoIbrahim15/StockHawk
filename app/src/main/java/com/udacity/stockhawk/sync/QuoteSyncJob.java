@@ -9,8 +9,10 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
+import com.udacity.stockhawk.listeners.ErrorListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,9 +32,9 @@ import yahoofinance.quotes.stock.StockQuote;
 
 public final class QuoteSyncJob {
 
-
+    public static ErrorListener mListener;
     private static final int ONE_OFF_ID = 2;
-    public static final String ACTION_WIDGET_UPDATED = "android.appwidget.action.ACTION_WIDGET_UPDATED";
+    public static final String ACTION_WIDGET_UPDATED = "android.appwidget.action.APPWIDGET_UPDATE";
     private static final int PERIOD = 300000;
     private static final int INITIAL_BACKOFF = 10000;
     private static final int PERIODIC_ID = 1;
@@ -105,6 +107,7 @@ public final class QuoteSyncJob {
 
                     quoteCVs.add(quoteCV);
                 } else {
+                    mListener.onError(R.string.wrong_input);
                     PrefUtils.removeStock(context, symbol);
                 }
             }
@@ -144,14 +147,15 @@ public final class QuoteSyncJob {
     }
 
 
-    public static synchronized void initialize(final Context context) {
+    public static synchronized void initialize(final Context context, ErrorListener listener) {
 
         schedulePeriodic(context);
-        syncImmediately(context);
+        syncImmediately(context, listener);
 
     }
 
-    public static synchronized void syncImmediately(Context context) {
+    public static synchronized void syncImmediately(Context context, ErrorListener listener) {
+        setListener(listener);
 
         ConnectivityManager cm =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -174,6 +178,10 @@ public final class QuoteSyncJob {
 
 
         }
+    }
+
+    private static void setListener(ErrorListener listener) {
+        mListener = listener;
     }
 
 

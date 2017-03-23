@@ -49,17 +49,15 @@
 
 
         <service
-            android:name="widget.StockWidgetListService"
-            android:exported="false"
+            android:name=".widget.StockWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
 
-        <receiver
-            android:name=".widget.StockWidgetProvider">
+        <receiver android:name=".widget.StockWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="android.appwidget.action.ACTION_WIDGET_UPDATED" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_provider_info" />
