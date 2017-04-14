@@ -72,9 +72,7 @@ public class HistoryActivity extends AppCompatActivity {
 
 
         String history_ins[] = stockHistory.split("\\r?\\n");
-//        for (String raw : history_ins) {
-//            Timber.d(raw);
-//        }
+
         initChart(history_ins, stockSymbol);
     }
 
@@ -88,13 +86,13 @@ public class HistoryActivity extends AppCompatActivity {
         }
 
         LineDataSet dataSet = new LineDataSet(entries, label);
-        dataSet.setColor(ContextCompat.getColor(this, android.R.color.white));
+        dataSet.setColor(ContextCompat.getColor(this, android.R.color.black));
         dataSet.setHighlightEnabled(false);
 
         LineData lineData = new LineData(dataSet);
-        lineData.setValueTextColor(ContextCompat.getColor(this, android.R.color.white));
+        lineData.setValueTextColor(ContextCompat.getColor(this, android.R.color.black));
         Description description = new Description();
-        description.setTextColor(ContextCompat.getColor(this, android.R.color.white));
+        description.setTextColor(ContextCompat.getColor(this, android.R.color.black));
         description.setText(getString(R.string.history_desc));
 
         lineChart.setDescription(description);

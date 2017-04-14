@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_margin="@dimen/d16"
+            android:background="@android:color/white"
             app:layout_flexBasisPercent="1000%" />
 
         <TextView

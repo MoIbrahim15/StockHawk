@@ -2,6 +2,7 @@ package com.udacity.stockhawk;
 
 import android.app.Application;
 
+import timber.log.BuildConfig;
 import timber.log.Timber;
 
 public class StockHawkApp extends Application {
